@@ -75,19 +75,19 @@ def load_questions(file_path: str) -> Tuple[Dict, List[Dict]]:
             raise ValueError(
                 f"Could not parse '{file_path}' as JSON ({e}). Questions are now "
                 "specified as a JSON file with a 'scales' library and a 'questions' "
-                "list (see questions.json for an example). Plain-text questions "
+                "list (see prca_questions.json for an example). Plain-text questions "
                 "files are no longer supported."
             )
 
     if isinstance(data, list):
         raise ValueError(
             f"'{file_path}' contains a JSON list. The questions file must be a JSON "
-            "object with 'scales' and 'questions' keys (see questions.json for an example)."
+            "object with 'scales' and 'questions' keys (see prca_questions.json for an example)."
         )
     if not isinstance(data, dict) or "scales" not in data or "questions" not in data:
         raise ValueError(
             f"'{file_path}' must be a JSON object with 'scales' and 'questions' keys "
-            "(see questions.json for an example)."
+            "(see prca_questions.json for an example)."
         )
 
     scales = data["scales"]
@@ -119,7 +119,7 @@ def load_questions(file_path: str) -> Tuple[Dict, List[Dict]]:
 
 class SurveyResponder:
     def __init__(self,
-                 questions_path: str = "questions.json",
+                 questions_path: str = "prca_questions.json",
                  persona_path: str = "persona.json",
                  model_name: str = "llama3.1:latest",
                  response_options: Optional[List[str]] = None,
@@ -131,7 +131,7 @@ class SurveyResponder:
         
         Args:
             questions_path (str): Path to the questions JSON file containing
-                'scales' and 'questions'. Defaults to "questions.json".
+                'scales' and 'questions'. Defaults to "prca_questions.json".
             persona_path (str): Path to the persona JSON file. Defaults to "persona.json".
             model_name (str): Name of the Ollama model to use. Defaults to "llama3.1:latest".
             response_options: Removed; must be None. Response options are now
@@ -147,7 +147,7 @@ class SurveyResponder:
                 "The response_options parameter has been removed. Response options "
                 "are now defined as named scales in the questions JSON file passed "
                 f"to questions_path ('{questions_path}'). Each question references "
-                "a scale by name (see questions.json for an example)."
+                "a scale by name (see prca_questions.json for an example)."
             )
 
         self.questions_path = questions_path

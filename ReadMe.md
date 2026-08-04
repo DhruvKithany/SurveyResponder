@@ -24,7 +24,7 @@ A small collection of previous responses are available via [Google Drive](https:
 ## 🔧 Features
 
 - ✅ Named response scales (e.g., 5-point agreement, 5-point frequency) defined once and referenced per question.
-- ✅ Per-question response options with numeric codes and prompt prefaces (via `questions.json`).
+- ✅ Per-question response options with numeric codes and prompt prefaces (via `prca_questions.json`).
 - ✅ Persona-driven simulation (via a JSON file with structured traits and descriptions).
 - ✅ Questions specified in JSON with stable ids (used as output column headings) and reverse-coding flags.
 - ✅ Generates N responses per session.
@@ -61,7 +61,7 @@ SurveyResponder is currently a single Python file (beta), installation is simple
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/SurveyResponder.py" -OutFile "SurveyResponder.py"
 
 # Download example files (optional)
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/questions.json" -OutFile "questions.json"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/prca_questions.json" -OutFile "prca_questions.json"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/persona.json" -OutFile "persona.json"
 ```
 
@@ -72,7 +72,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/adamrossnelson/SurveyR
 curl -O https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/SurveyResponder.py
 
 # Download example files (optional)
-curl -O https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/questions.json
+curl -O https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/prca_questions.json
 curl -O https://raw.githubusercontent.com/adamrossnelson/SurveyResponder/main/persona.json
 ```
 
@@ -108,7 +108,7 @@ df.to_csv("results.csv", index=False)
 
 # Advanced usage with all parameters
 responder = SurveyResponder(
-    questions_path="questions.json",
+    questions_path="prca_questions.json",
     persona_path="persona.json",
     model_name="llava-llama3:latest",
     num_responses=100,
@@ -143,7 +143,7 @@ df = responder.run_write(
 
 ### As a CLI tool 
 
-1. **Run a survey:** `python cli.py run --questions questions.json --num-responses 10`
+1. **Run a survey:** `python cli.py run --questions prca_questions.json --num-responses 10`
 2. **Manage your questions:**
    `python cli.py questions --list`
    `python cli.py questions --add "I enjoy this research project." --scale likert5`
@@ -151,7 +151,7 @@ df = responder.run_write(
 **Full example with advanced options:**
 ```bash
 python cli.py run \
-  --questions questions.json \
+  --questions prca_questions.json \
   --persona persona.json \
   --model llama3.1:latest \
   --num-responses 100 \
@@ -175,7 +175,7 @@ ollama pull mistral:latest
 
 from SurveyResponder import SurveyResponder
 responder = SurveyResponder(
-    questions_path="questions.json",
+    questions_path="prca_questions.json",
     persona_path="persona.json",
     model_name="mistral:latest", # Changed to mistral
     num_responses=100,
@@ -186,16 +186,16 @@ responder = SurveyResponder(
 ### Editing Questions and Personas
 SurveyResponder uses two input files:
 
-`questions.json` — JSON with a `scales` library and a `questions` list. Each question has an `id` (used as the output column heading), `text`, a `scale` reference, and a `reverse_coded` flag.
+`prca_questions.json` — JSON with a `scales` library and a `questions` list. Each question has an `id` (used as the output column heading), `text`, a `scale` reference, and a `reverse_coded` flag.
 
 `persona.json` — a dictionary of traits where each key becomes a column and each value is a list of [value, description] pairs.
 
 You can edit these files manually in a file browser, text editor, or like this:
 ```python
-# Add a new question to questions.json
+# Add a new question to prca_questions.json
 import json
 
-with open("questions.json", "r") as f:
+with open("prca_questions.json", "r") as f:
     survey = json.load(f)
 
 survey["questions"].append({
@@ -205,7 +205,7 @@ survey["questions"].append({
     "reverse_coded": False
 })
 
-with open("questions.json", "w") as f:
+with open("prca_questions.json", "w") as f:
     json.dump(survey, f, indent=2)
 
 # Add a new trait to persona.json
@@ -223,7 +223,7 @@ with open("persona.json", "w") as f:
     json.dump(personas, f, indent=2)
 ```
 ### Changing Response Options
-Response options are defined as named scales in `questions.json`. Each scale pairs a prompt `preface` with an `options` map of response labels to numeric codes. Add or edit scales in the `scales` section, then reference them from individual questions:
+Response options are defined as named scales in `prca_questions.json`. Each scale pairs a prompt `preface` with an `options` map of response labels to numeric codes. Add or edit scales in the `scales` section, then reference them from individual questions:
 ```json
 {
   "scales": {
@@ -258,7 +258,7 @@ personas = responder.example_persona(npersonas=3)
 for i, p in enumerate(personas):
     print(f"Persona {i+1}: {p}")
 
-# Generate an example prompt using the first question in questions.txt
+# Generate an example prompt using the first question in prca_questions.txt
 prompt = responder.example_prompt()
 print(prompt)
 
@@ -270,7 +270,7 @@ print(prompt)
 
 ## 📁 File Formats
 
-### Input: `questions.json`
+### Input: `prca_questions.json`
 
 JSON file with named response scales and a list of questions. Each question's `id` becomes its column heading in the output CSV. Each question references a scale by name, and each scale defines the prompt `preface` and the `options` (response labels mapped to numeric codes):
 
@@ -327,7 +327,7 @@ When `run_write()` is called, a cell-by-cell log is written alongside the result
 | Column              | Description                                                                                              |
 | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | `resid`             | Respondent id (matches the `resid` column in `results.csv`).                                             |
-| `question_id`       | Question id from `questions.json`.                                                                       |
+| `question_id`       | Question id from `prca_questions.json`.                                                                       |
 | `scale`             | Name of the scale that question references.                                                              |
 | `original_response` | Raw response returned by the LLM before any recoding or reverse coding.                                  |
 | `final_response`    | Response after validation/recoding/reverse-coding (this is what appears in `results.csv`).               |
@@ -341,7 +341,7 @@ Configuration parameters file for reproducibility:
 
 ```json
 {
-  "questions_path": "questions.json",
+  "questions_path": "prca_questions.json",
   "persona_path": "persona.json",
   "model_name": "llava-llama3:latest",
   "base_url": "http://localhost:11434/api/generate",
@@ -392,7 +392,7 @@ SurveyResponder/
 │       ├── core.py              ← SurveyResponder class + helper functions
 │       ├── cli.py               ← CLI entry point
 │       └── data/
-│           ├── questions.txt    ← default example questions
+│           ├── prca_questions.txt    ← default example questions
 │           └── persona.json     ← default example persona
 ├── tests/
 │   ├── conftest.py

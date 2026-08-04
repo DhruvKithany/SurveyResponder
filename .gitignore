@@ -28,6 +28,8 @@ wheels/
 
 # Jupyter Notebook
 *.ipynb
+!Run_PRCA_Survey.ipynb
+!Run_PRCA_Survey_Colab.ipynb
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 example1001/
@@ -75,8 +77,8 @@ cannon_responses/
 !responses.csv
 *.json
 !persona.json
-!questions.json
+!prca_questions.json
 responses_params.json
 *.txt
 !requirements.txt
-!questions.txt
+!prca_questions.txt

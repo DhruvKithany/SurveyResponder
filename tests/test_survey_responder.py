@@ -136,13 +136,13 @@ def test_error_handling_invalid_files():
     """Test error handling for invalid files."""
     with pytest.raises(FileNotFoundError):            # Verify proper error handling
         SurveyResponder(
-            questions_path="nonexistent_questions.json",
+            questions_path="nonexistent_prca_questions.json",
             persona_path="nonexistent_persona.json"
         )
 
 def test_legacy_text_questions_rejected(tmp_path, sample_persona_file):
     """Test that legacy plain-text questions files raise an informative error."""
-    legacy_file = tmp_path / "questions.txt"
+    legacy_file = tmp_path / "prca_questions.txt"
     legacy_file.write_text("I enjoy being a student.\nI enjoy learning new things.\n")
     with pytest.raises(ValueError, match="JSON"):     # Verify error mentions the JSON format
         SurveyResponder(

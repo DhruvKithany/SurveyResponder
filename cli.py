@@ -18,8 +18,8 @@ def cli() -> None:
 
     run_parser = subparsers.add_parser("run", help="Run survey responder")
 
-    run_parser.add_argument("--questions", default="questions.json",
-                            help="Path to questions JSON file with scales and questions (default: questions.json)")
+    run_parser.add_argument("--questions", default="prca_questions.json",
+                            help="Path to questions JSON file with scales and questions (default: prca_questions.json)")
     run_parser.add_argument("--persona", default="persona.json",
                             help="Path to persona JSON file (default: persona.json)")
     run_parser.add_argument("--model", default="llama3.1:latest",
@@ -34,12 +34,12 @@ def cli() -> None:
                             help="CSV filepath to save results (default: results.csv)")
 
     # CLI commands for listing and modifying a file of questions
-    q_parser = subparsers.add_parser("questions", help="List or update questions JSON file (default: questions.json)")
+    q_parser = subparsers.add_parser("questions", help="List or update questions JSON file (default: prca_questions.json)")
 
     # Ensures questions commands can only be run one at a time
     group = q_parser.add_mutually_exclusive_group(required=True)
 
-    q_parser.add_argument("--file", default="questions.json", help="Specify which questions JSON file to manage (default: questions.json)")
+    q_parser.add_argument("--file", default="prca_questions.json", help="Specify which questions JSON file to manage (default: prca_questions.json)")
     q_parser.add_argument("--id", default=None, help="Question id for --add; used as the output column heading (default: generated from the question text)")
     q_parser.add_argument("--scale", default=None, help="Scale name for --add; must be defined in the file (default: first scale in the file)")
     group.add_argument("--list", action="store_true", help="List all questions")
@@ -137,7 +137,7 @@ def cli() -> None:
         if args.response_options:
             print("Input Error: --response-options has been removed. Response options are now "
                   "defined as named scales in the questions JSON file passed to --questions "
-                  "(see questions.json for an example).", file=sys.stderr)
+                  "(see prca_questions.json for an example).", file=sys.stderr)
             sys.exit(1)
         # Validate args and instantiate a SurveyResponder
         try:

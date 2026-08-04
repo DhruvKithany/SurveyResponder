@@ -1,0 +1,89 @@
+{
+  "scales": {
+    "likert5": {
+      "preface": "Respond with a number that cooresponds to your answer. Only respond with a number and nothing else. How strongly do you agree or disagree with the following statement:",
+      "options": {
+        "1) strongly disagree": 1,
+        "2) disagree": 2,
+        "3) neutral": 3,
+        "4) agree": 4,
+        "5) strongly agree": 5
+      },
+      "valid_responses": ["1", "2", "3", "4", "5", "strongly disagree", "disagree", "neutral", "agree", "strongly agree"]
+    }
+  },
+  "questions": [
+    {
+      "id": "prca_1",
+      "text": "I dislike participating in group discussions",
+      "scale": "likert5",
+      "reverse_coded": true
+    },
+    {
+      "id": "prca_2",
+      "text": "Generally, I am comfortable while participating in group discussions",
+      "scale": "likert5",
+      "reverse_coded": false
+    },
+    {
+      "id": "prca_3",
+      "text": "I am tense and nervous while participating in group discussions",
+      "scale": "likert5",
+      "reverse_coded": true
+    },
+    {
+      "id": "prca_4",
+      "text": "I like to get involved in group discussions",
+      "scale": "likert5",
+      "reverse_coded": false
+    },
+    {
+      "id": "prca_5",
+      "text": "Engaging in a group discussion with new people makes me tense and nervous",
+      "scale": "likert5",
+      "reverse_coded": true
+    },
+    {
+      "id": "prca_6",
+      "text": "I am calm and relaxed while participating in group discussions",
+      "scale": "likert5",
+      "reverse_coded": false
+    },
+    {
+      "id": "prca_7",
+      "text": "While participating in a conversation with a new acquaintance, I feel very nervous",
+      "scale": "likert5",
+      "reverse_coded": true
+    },
+    {
+      "id": "prca_8",
+      "text": "I have no fear of speaking up in conversations",
+      "scale": "likert5",
+      "reverse_coded": false
+    },
+    {
+      "id": "prca_9",
+      "text": "Ordinarily I am very tense and nervous in conversations",
+      "scale": "likert5",
+      "reverse_coded": true
+    },
+    {
+      "id": "prca_10",
+      "text": "Ordinarily I am very calm and relaxed in conversations",
+      "scale": "likert5",
+      "reverse_coded": false
+    },
+    {
+      "id": "prca_11",
+      "text": "While conversing with a new acquaintance, I feel very relaxed",
+      "scale": "likert5",
+      "reverse_coded": false
+    },
+    {
+      "id": "prca_12",
+      "text": "I'm afraid to speak up in conversations",
+      "scale": "likert5",
+      "reverse_coded": true
+    }
+  ]
+}
