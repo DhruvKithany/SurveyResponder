@@ -82,3 +82,5 @@ responses_params.json
 *.txt
 !requirements.txt
 !prca_questions.txt
+# Run outputs
+*_Runs/
